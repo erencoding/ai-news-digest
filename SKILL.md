@@ -1,7 +1,7 @@
 ---
 name: ai-news-digest
-description: 多源 AI 资讯汇总，汇聚 smol.ai、TechCrunch、The Decoder、MarkTechPost、DeepMind、BAIR、KDnuggets、The Batch、Hacker News、Artificial Analysis 等源。自动抓取并生成带中文摘要和源链接的结构化日报，同时包含 AI 模型排行榜。适用于询问 AI 资讯、AI 新闻、AI 日报、最新 AI 动态等场景。
-version: "6.1"
+description: 多源 AI 资讯汇总，汇聚 smol.ai、TechCrunch、The Decoder、MarkTechPost、DeepMind、BAIR、KDnuggets、The Batch、Hacker News、Artificial Analysis 等源。自动抓取并生成带中文摘要和源链接的结构化日报，同时包含 AI 模型排行榜。适用于询问 AI 资讯、AI 新闻、AI 日报、最新 AI 动态等场景。输出方式支持两种：① 直接回复到当前对话；② 写入飞书文档（doc_id: EAPQdnMQ6oQPARxUB5gc1qgGnC6）并推送到 GitHub。
+version: "6.2"
 author: Judy (朱迪)
 license: MIT
 ---
@@ -11,6 +11,26 @@ license: MIT
 多源 AI 资讯汇总，覆盖 10 个权威来源。每次输出**必须包含中文摘要和源链接**，格式统一、可直接阅读。
 
 ---
+
+## 输出方式
+
+用户可以选择输出方式：
+
+### 方式一：直接回复（默认）
+直接输出 AI 资讯日报到当前对话。
+
+### 方式二：写入飞书文档
+将 AI 资讯日报追加到飞书文档，并推送到 GitHub。
+
+- 飞书文档：https://www.feishu.cn/docx/EAPQdnMQ6oQPARxUB5gc1qgGnC6
+- doc_id: `EAPQdnMQ6oQPARxUB5gc1qgGnC6`
+- 仓库：https://github.com/erencoding/ai-news-digest-skill（GitHub Actions 自动同步文档）
+
+**操作流程**：
+1. 抓取各来源资讯
+2. 生成 Markdown 日报
+3. 调用 `feishu_update_doc` 追加到文档（mode=append）
+4. 回复用户已完成写入
 
 ## 触发关键词
 
@@ -428,6 +448,7 @@ for url, title in items[:5]:
 3. **最后必须有来源汇总表**，注明条数和链接
 4. **所有日期必须标注**
 5. **格式统一**，便于阅读
+6. **输出方式**：默认直接回复；如需写入飞书文档，用户会明确说明
 
 ---
 
