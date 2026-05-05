@@ -1,6 +1,6 @@
 # AI News Digest Skill
 
-多源 AI 资讯汇总 Skill，支持 11 个权威来源，自动生成带中文摘要和源链接的结构化日报。
+多源 AI 资讯汇总 Skill，支持 12 个权威来源，自动生成带中文摘要和源链接的结构化日报。
 
 ## 目录结构
 
@@ -12,7 +12,7 @@ ai-news-digest/
 └── docs/             # 文档
 ```
 
-## 来源（11个）
+## 来源（12个）
 
 | # | 来源 | 类型 | 状态 |
 |---|---|---|---|
@@ -27,6 +27,7 @@ ai-news-digest/
 | 9 | Hacker News | AI 技术讨论 | ✅ |
 | 10 | Artificial Intelligence News | 商业 AI 新闻 | ✅ |
 | 11 | Artificial Analysis | AI 模型排行榜 | ✅ |
+| 12 | Google Trends | AI 热搜趋势 | ✅ |
 
 ## 输出格式要求
 
@@ -34,8 +35,10 @@ ai-news-digest/
 2. 每条必须有**可点击源链接**
 3. 最后必须有**来源汇总表**
 4. 包含 **AI 模型排行榜** 模块
+5. 包含 **Google AI 热搜趋势** 模块
 
 ## 版本历史
 
+- v6.3: 新增 Google Trends AI 热搜趋势
 - v6.1: 新增 Artificial Analysis AI 模型排行榜
 - v6.0: 确立完整格式标准，扩展至 10 个来源

@@ -87,6 +87,28 @@
 
 ---
 
+## 🔥 Google AI 热搜趋势
+
+### 近7日关键词热度（满分100）
+
+| 关键词 | 热度指数 |
+|---|---|
+| ChatGPT | 100 |
+| AI | 85 |
+| Claude | 63 |
+| Gemini | 57 |
+| LLM | 42 |
+
+### 相关热门搜索
+
+- **ChatGPT**：chatgpt 4o、chatgpt free、chatgpt login
+- **Claude**：claude 3.5、claude vs chatgpt、anthropic claude
+- **AI**：ai image generator、ai detector、ai tools
+
+📎 来源：[Google Trends](https://trends.google.com/trends/explore?q=AI)
+
+---
+
 ## 📊 来源汇总
 
 | 来源 | 资讯数 | 链接 |
@@ -96,5 +118,6 @@
 | BAIR Blog | 1条 | [进入](https://bair.berkeley.edu/blog/) |
 | The Batch | 2条 | [进入](https://www.deeplearning.ai/the-batch/) |
 | Artificial Analysis | 排行榜 | [进入](https://artificialanalysis.ai/) |
+| Google Trends | 趋势 | [进入](https://trends.google.com/) |
 
-**共抓取 8 条资讯 + 1 个排行榜，全部附有摘要和源链接** ✅
+**共抓取 8 条资讯 + 1 个排行榜 + 趋势数据，全部附有摘要和源链接** ✅

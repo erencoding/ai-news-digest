@@ -1,12 +1,12 @@
 ---
 name: ai-news-digest
-description: 多源 AI 资讯汇总，汇聚 smol.ai、TechCrunch、The Decoder、MarkTechPost、DeepMind、BAIR、KDnuggets、The Batch、Hacker News、Artificial Analysis 等源。自动抓取并生成带中文摘要和源链接的结构化日报，同时包含 AI 模型排行榜。适用于询问 AI 资讯、AI 新闻、AI 日报、最新 AI 动态等场景。输出方式支持两种：① 直接回复到当前对话；② 写入飞书文档（doc_id: EAPQdnMQ6oQPARxUB5gc1qgGnC6）并推送到 GitHub。
-version: "6.2"
+description: 多源 AI 资讯汇总，汇聚 smol.ai、TechCrunch、The Decoder、MarkTechPost、DeepMind、BAIR、KDnuggets、The Batch、Hacker News、Artificial Analysis、Google Trends 等源。自动抓取并生成带中文摘要和源链接的结构化日报，同时包含 AI 模型排行榜和 Google 趋势热词。适用于询问 AI 资讯、AI 新闻、AI 日报、最新 AI 动态等场景。输出方式支持两种：① 直接回复到当前对话；② 写入飞书文档（doc_id: EAPQdnMQ6oQPARxUB5gc1qgGnC6）并推送到 GitHub。
+version: "6.3"
 author: Judy (朱迪)
 license: MIT
 ---
 
-# AI News Digest Skill (v6.0)
+# AI News Digest Skill (v6.3)
 
 多源 AI 资讯汇总，覆盖 10 个权威来源。每次输出**必须包含中文摘要和源链接**，格式统一、可直接阅读。
 
@@ -106,6 +106,24 @@ AI汇总
 
 ---
 
+## 🔥 Google AI 热搜趋势
+
+### 近7日关键词热度（满分100）
+
+| 关键词 | 热度指数 |
+|---|---|
+| {关键词1} | {分数} |
+| {关键词2} | {分数} |
+| {关键词3} | {分数} |
+
+### 相关热门搜索
+
+- **{关键词}**：{热门查询1}、{热门查询2}、{热门查询3}
+
+📎 来源：[Google Trends](https://trends.google.com/trends/explore?q=AI)
+
+---
+
 ## 📊 来源汇总
 
 | 来源 | 资讯数 | 链接 |
@@ -114,6 +132,7 @@ AI汇总
 | TechCrunch | X条 | [进入](https://techcrunch.com/category/artificial-intelligence/) |
 | ... | ... | ... |
 | Artificial Analysis | 排行榜 | [进入](https://artificialanalysis.ai/) |
+| Google Trends | 趋势 | [进入](https://trends.google.com/) |
 
 **共抓取 X 条资讯，全部附有摘要和源链接** ✅
 ```
@@ -131,7 +150,7 @@ AI汇总
 
 ---
 
-## 数据来源（11个）
+## 数据来源（12个）
 
 | # | 来源 | 类型 | 验证状态 | Fetch 方式 |
 |---|---|---|---|---|
@@ -146,6 +165,7 @@ AI汇总
 | 9 | **Hacker News** | AI 技术讨论 | ✅ 正常 | JSON API |
 | 10 | **Artificial Intelligence News** | 商业 AI 新闻 | ✅ 正常 | 直接 curl RSS |
 | 11 | **Artificial Analysis** | AI 模型排行榜 | ✅ 正常 | Playwright 截图 + API |
+| 12 | **Google Trends** | AI 热搜趋势 | ✅ 正常 | pytrends Python 库 |
 
 ---
 
@@ -383,6 +403,44 @@ for url, title in items[:5]:
 
 ---
 
+### 11. Google Trends（AI 热搜趋势）
+
+```bash
+python3 -c "
+from pytrends.request import TrendReq
+
+pytrends = TrendReq(hl='zh-CN', tz=480)
+
+# AI 相关关键词趋势
+kw_list = ['AI', 'ChatGPT', 'Claude', 'Gemini', 'LLM']
+pytrends.build_payload(kw_list, cat=0, timeframe='now 7-d', geo='', gprop='')
+interest = pytrends.interest_over_time()
+
+print('=== AI 关键词近7日搜索趋势 ===')
+if not interest.empty:
+    latest = interest.iloc[-1]
+    ranked = sorted(latest.items(), key=lambda x: x[1], reverse=True)
+    for kw, score in ranked:
+        if kw != 'isPartial':
+            print(f'{kw}: {score}')
+
+# 相关热门查询
+print()
+print('=== 相关热门查询 ===')
+related = pytrends.related_queries()
+for kw in kw_list[:3]:
+    top = related.get(kw, {}).get('top')
+    if top is not None and not top.empty:
+        print(f'[ {kw} ]')
+        for _, row in top.head(3).iterrows():
+            print(f'  {row[\"query\"]}: {row[\"value\"]}')
+" 2>&1
+```
+
+⚠️ 需要安装 pytrends：`pip install pytrends`
+
+---
+
 ## 输出示例（完整参考）
 
 以下是完全符合格式的输出示例，每次执行 Skill 时必须按照此格式输出：
@@ -428,6 +486,27 @@ for url, title in items[:5]:
 
 ---
 
+## 🔥 Google AI 热搜趋势
+
+### 近7日关键词热度（满分100）
+
+| 关键词 | 热度指数 |
+|---|---|
+| ChatGPT | 100 |
+| AI | 82 |
+| Claude | 61 |
+| Gemini | 54 |
+| LLM | 38 |
+
+### 相关热门搜索
+
+- **ChatGPT**：chatgpt 4o、chatgpt free、chatgpt login
+- **Claude**：claude 3.5、claude vs chatgpt、anthropic claude
+
+📎 来源：[Google Trends](https://trends.google.com/trends/explore?q=AI)
+
+---
+
 ## 📊 来源汇总
 
 | 来源 | 资讯数 | 链接 |
@@ -435,8 +514,9 @@ for url, title in items[:5]:
 | The Decoder | 2条 | [进入](https://the-decoder.com/) |
 | TechCrunch | 1条 | [进入](https://techcrunch.com/category/artificial-intelligence/) |
 | BAIR Blog | 1条 | [进入](https://bair.berkeley.edu/blog/) |
+| Google Trends | 趋势 | [进入](https://trends.google.com/) |
 
-**共抓取 4 条资讯，全部附有摘要和源链接** ✅
+**共抓取 4 条资讯 + 趋势数据，全部附有摘要和源链接** ✅
 ```
 
 ---
@@ -467,6 +547,7 @@ for url, title in items[:5]:
 | Hacker News | https://hacker-news.firebaseio.com/v0/topstories.json |
 | AI News | https://www.artificialintelligence-news.com/artificial-intelligence-news/ |
 | Artificial Analysis | https://artificialanalysis.ai/ |
+| Google Trends | https://trends.google.com/trends/explore?q=AI |
 
 ---
 
@@ -475,5 +556,6 @@ for url, title in items[:5]:
 - TechCrunch 必须加代理：`-x http://127.0.0.1:7892`
 - DeepMind 可能需要代理，不行就跳过
 - Hacker News 连接慢时等待或跳过
+- Google Trends 需要安装 pytrends：`pip install pytrends`；访问受限时可跳过
 - 每条摘要是中文，2-3 句话，说明 WHY it matters
 - 输出语言：全部中文（摘要、标题、格式都是中文）

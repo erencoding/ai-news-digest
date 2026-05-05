@@ -69,9 +69,17 @@
 - **抓取方式**: Playwright 截图
 - **状态**: ✅ 正常
 
+### 12. Google Trends
+- **URL**: https://trends.google.com/trends/explore?q=AI
+- **类型**: AI 热搜趋势
+- **抓取方式**: pytrends Python 库
+- **状态**: ✅ 正常
+- **依赖**: `pip install pytrends`
+
 ## 注意事项
 
 - TechCrunch 必须加代理：`-x http://127.0.0.1:7892`
 - DeepMind 国内访问困难，建议跳过
 - Hacker News 连接较慢，设置足够的 timeout
+- Google Trends 需要安装 pytrends；访问受限时可跳过
 - 每条资讯必须包含中文摘要，不能只给标题
